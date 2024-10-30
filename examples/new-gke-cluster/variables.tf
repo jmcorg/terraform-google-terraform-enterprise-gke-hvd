@@ -107,10 +107,10 @@ variable "tfe_lb_subnet_name" {
   description = "Name or self_link to existing VPC subnetwork to create TFE internal load balancer IP address in."
   default     = null
 
-  validation {
-    condition     = var.create_tfe_lb_ip && var.tfe_lb_ip_address_type == "INTERNAL" ? var.tfe_lb_subnet_name != null : true
-    error_message = "Must provide a value when `create_tfe_lb_ip` is `true` and `tfe_lb_ip_address_type` is `INTERNAL`."
-  }
+  # validation {
+  #   condition     = (var.create_tfe_lb_ip && (var.tfe_lb_ip_address_type == "INTERNAL")) ? (var.tfe_lb_subnet_name != null) : true
+  #   error_message = "Must provide a value when `create_tfe_lb_ip` is `true` and `tfe_lb_ip_address_type` is `INTERNAL`."
+  # }
 }
 
 variable "tfe_lb_ip_address" {
@@ -118,10 +118,10 @@ variable "tfe_lb_ip_address" {
   description = "IP address to assign to TFE load balancer. Must be a valid IP address from `tfe_lb_subnet_name` when `tfe_lb_ip_address_type` is `INTERNAL`."
   default     = null
 
-  validation {
-    condition     = var.create_tfe_lb_ip && var.tfe_lb_ip_address_type == "INTERNAL" ? var.tfe_lb_ip_address != null : true
-    error_message = "Must provide a value when `create_tfe_lb_ip` is `true` and `tfe_lb_ip_address_type` is `INTERNAL`."
-  }
+  # validation {
+  #   condition     = var.create_tfe_lb_ip && var.tfe_lb_ip_address_type == "INTERNAL" ? var.tfe_lb_ip_address != null : true
+  #   error_message = "Must provide a value when `create_tfe_lb_ip` is `true` and `tfe_lb_ip_address_type` is `INTERNAL`."
+  # }
 }
 
 variable "gke_subnet_name" {
@@ -144,10 +144,10 @@ variable "tfe_cloud_dns_record_ip_address" {
   description = "IP address of DNS record for TFE. Only valid when `create_cloud_dns_record` is `true` and `create_tfe_lb_ip` is `false`."
   default     = null
 
-  validation {
-    condition     = var.create_tfe_lb_ip ? var.tfe_cloud_dns_record_ip_address == null : true
-    error_message = "Value must be `null` when `create_tfe_lb_ip` is `true`."
-  }
+  # validation {
+  #   condition     = var.create_tfe_lb_ip ? var.tfe_cloud_dns_record_ip_address == null : true
+  #   error_message = "Value must be `null` when `create_tfe_lb_ip` is `true`."
+  # }
 }
 
 variable "cloud_dns_zone_name" {
@@ -493,4 +493,15 @@ variable "redis_kms_cmek_name" {
   type        = string
   description = "Name of Cloud KMS customer managed encryption key (CMEK) to use for TFE Redis instance."
   default     = null
+}
+
+variable "ip_range_pods" {
+  type        = string
+  description = "The _name_ of the secondary subnet ip range to use for pods"
+}
+
+
+variable "ip_range_services" {
+  type        = string
+  description = "The _name_ of the secondary subnet range to use for services"
 }

@@ -36,6 +36,7 @@ module "tfe" {
   create_helm_overrides_file = var.create_helm_overrides_file
 
   # --- Networking --- #
+  vpc_project_id = var.vpc_project_id
   vpc_name           = var.vpc_name
   create_tfe_lb_ip   = var.create_tfe_lb_ip
   tfe_lb_subnet_name = var.tfe_lb_subnet_name
@@ -50,6 +51,9 @@ module "tfe" {
   create_gke_cluster                = var.create_gke_cluster
   gke_cluster_is_private            = var.gke_cluster_is_private
   gke_control_plane_authorized_cidr = var.gke_control_plane_authorized_cidr
+  ip_range_services = var.ip_range_services
+  ip_range_pods = var.ip_range_pods
+
 
   # --- Database --- #
   tfe_database_password_secret_version = var.tfe_database_password_secret_version

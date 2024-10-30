@@ -20,7 +20,7 @@ resource "google_container_cluster" "tfe" {
 
   network    = data.google_compute_network.vpc.self_link
   subnetwork = data.google_compute_subnetwork.gke[0].self_link
-
+ 
   dynamic "private_cluster_config" {
     for_each = var.gke_cluster_is_private ? [1] : []
 
@@ -58,7 +58,12 @@ resource "google_container_cluster" "tfe" {
   workload_identity_config {
     workload_pool = "${var.project_id}.svc.id.goog"
   }
-
+  ip_allocation_policy {
+    cluster_secondary_range_name  = var.ip_range_pods
+    services_secondary_range_name = var.ip_range_services
+   
+    }
+   
   logging_service = "logging.googleapis.com/kubernetes"
 }
 
